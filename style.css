@@ -1,0 +1,213 @@
+/* Configuración General */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    /* Fondo inspirado en Lirios Rosa / Stargazer */
+    background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Evita barras de desplazamiento por los elementos flotantes */
+    padding: 20px;
+    position: relative;
+}
+
+.interfaz-carta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    z-index: 10; /* Asegura que la carta esté por encima de los pétalos */
+}
+
+/* --- ESTILO DEL SOBRE (Ajustado a tonos lirio) --- */
+.sobre-wrapper {
+    position: relative;
+    width: 280px;
+    height: 180px;
+    background-color: #ffb3c1; /* Rosa base */
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 10px 30px rgba(226, 115, 134, 0.25);
+    cursor: pointer;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.sobre-wrapper:hover {
+    transform: scale(1.05);
+}
+
+/* Solapa triangular del sobre */
+.sobre .solapa {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-top: 100px solid #ff758f; /* Rosa más intenso como el centro del lirio */
+    transform-origin: top;
+    transition: transform 0.4s ease-in-out;
+    z-index: 3;
+}
+
+/* El frente del sobre */
+.sobre .frente {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 140px solid #ff85a1;
+    border-right: 140px solid #ff85a1;
+    border-bottom: 90px solid #ff758f;
+    border-radius: 0 0 10px 10px;
+    z-index: 2;
+}
+
+/* El corazón de cierre */
+.sobre .corazon {
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    z-index: 4;
+    transition: transform 0.3s ease;
+}
+
+/* Animación de apertura */
+.sobre-wrapper.abierto .solapa {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.sobre-wrapper.abierto {
+    transform: translateY(40px) scale(0.8);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- ESTILO DE LA CARTA --- */
+.contenedor-oculto {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+}
+
+.carta {
+    background: #ffffff;
+    width: 100%;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(226, 115, 134, 0.2);
+    border: 1px solid #fff0f3;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.carta.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    height: auto;
+}
+
+.contenido-carta h2 {
+    color: #c9184a; /* Un tono vino/rosa oscuro elegante */
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.contenido-carta hr {
+    border: none;
+    border-top: 2px dashed #ffb3c1;
+    margin-bottom: 20px;
+}
+
+.contenido-carta p {
+    color: #4a4a4a;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.contenido-carta .firma {
+    text-align: right;
+    color: #c9184a;
+    margin-top: 25px;
+    font-style: italic;
+}
+
+/* --- ESTILO DE LOS ELEMENTOS FLOTANTES (Nuevo) --- */
+
+.contenedor-flotante {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1; /* Detrás de la carta */
+    pointer-events: none; /* No interfieren con los clics */
+}
+
+/* Estilo para los pétalos (inspirados en Lirios) */
+.petalo {
+    position: absolute;
+    width: 15px;
+    height: 30px;
+    background: linear-gradient(to bottom, #ff85a1, #fff0f3);
+    border-radius: 50% 50% 0 0;
+    opacity: 0.7;
+    animation: flotarPetalo linear infinite;
+}
+
+/* Estilo para los corazones flotantes */
+.corazon-flotante {
+    position: absolute;
+    font-size: 1rem;
+    opacity: 0.6;
+    color: #c9184a;
+    animation: flotarCorazon linear infinite;
+}
+
+/* Animación para los pétalos (caída suave con rotación) */
+@keyframes flotarPetalo {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Animación para los corazones (caída más directa) */
+@keyframes flotarCorazon {
+    0% {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨✨✨</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Contenedor para los pétalos y corazones flotantes -->
+    <div id="contenedorFlotante" class="contenedor-flotante"></div>
+
+    <div class="interfaz-carta">
+        <!-- El Sobre -->
+        <div class="sobre-wrapper" id="sobreWrapper" onclick="abrirCarta()">
+            <div class="sobre">
+                <div class="solapa"></div>
+                <div class="frente"></div>
+                <div class="corazon">❤️</div>
+            </div>
+        </div>
+
+        <!-- La Carta (oculta al inicio) -->
+        <div class="carta contenedor-oculto" id="seccionCarta">
+            <div class="contenido-carta">
+                <h2>Para la que amo y amare pase lo que pase.✨</h2>
+                <hr>
+                <p>Eres muy especial para mí y en las noches es cuando más te extraño, esas pláticas, esas llamadas, todo lo que hiciste cuando estábamos juntos. Siempre estare para vos te quiero.</p>
+                <p>Perdon por seguir así pero me e dado cuetnta de que nadie te va a poder remplazar, siempre vas a tener un lugar muy importante en mi corazon, y en mi vida. perdon por tan poco, te quiero muchisimo.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script actualizado para la interactividad y los elementos flotantes -->
+    <script>
+        function abrirCarta() {
+            const sobre = document.getElementById('sobreWrapper');
+            const carta = document.getElementById('seccionCarta');
+            const contenedor = document.getElementById('contenedorFlotante');
+            
+            // Añade la animación de apertura del sobre
+            sobre.classList.add('abierto');
+            
+            // Muestra la carta suavemente después de que el sobre se abra
+            setTimeout(() => {
+                carta.classList.remove('contenedor-oculto');
+                carta.classList.add('visible');
+                
+                // Comienza a crear los pétalos y corazones cuando la carta es visible
+                crearElementosFlotantes();
+            }, 800);
+        }
+
+        function crearElementosFlotantes() {
+            const contenedor = document.getElementById('contenedorFlotante');
+            const totalElementos = 30; // Cantidad de pétalos y corazones
+
+            for (let i = 0; i < totalElementos; i++) {
+                // Decide si crea un pétalo o un corazón
+                const esPetalo = Math.random() > 0.5;
+                const elemento = document.createElement('div');
+                
+                if (esPetalo) {
+                    elemento.classList.add('petalo');
+                } else {
+                    elemento.classList.add('corazon-flotante');
+                    elemento.innerText = '❤️'; // Usamos el emoji para el corazón
+                }
+
+                // Posición horizontal aleatoria (0% a 100% del ancho)
+                elemento.style.left = Math.random() * 100 + 'vw';
+                
+                // Retraso de animación aleatorio para que no salgan todos a la vez
+                elemento.style.animationDelay = Math.random() * 5 + 's';
+                
+                // Duración de la animación aleatoria para que floten a distintas velocidades
+                elemento.style.animationDuration = Math.random() * 3 + 4 + 's'; // Entre 4 y 7 segundos
+                
+                // Tamaño aleatorio para dar profundidad
+                const escala = Math.random() * 0.5 + 0.5; // Entre 0.5 y 1.0
+                elemento.style.transform = `scale(${escala})`;
+
+                contenedor.appendChild(elemento);
+            }
+        }
+    </script>
+</body>
+</html>
